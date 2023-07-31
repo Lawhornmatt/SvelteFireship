@@ -2,4 +2,4 @@
     
 </script>
 
-<h2 class="text-yellow-200">PHOTO</h2>
+<h2 class="">PHOTO</h2>

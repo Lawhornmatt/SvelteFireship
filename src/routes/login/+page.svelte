@@ -2,4 +2,4 @@
     
 </script>
 
-<h2 class="text-blue-500">LOGIN</h2>
+<h2 class="">LOGIN</h2>
