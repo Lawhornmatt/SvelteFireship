@@ -1,6 +1,6 @@
 <script lang="ts">
     import AuthCheck from "$lib/components/AuthCheck.svelte";
-    import { db, user } from "$lib/firebase";
+    import { db, user, userData } from "$lib/firebase";
     import { doc, getDoc, writeBatch } from "firebase/firestore";
 
     let username = "";
@@ -49,45 +49,58 @@
         });
 
         await batch.commit();
+
+        username = "";
+        isAvailable = false;
     };
 </script>
 
 <AuthCheck>
-    <h2 class="">Username</h2>
-    <form class="w-2/5" on:submit|preventDefault={confirmUsername}>
-        <input
-            type="text"    
-            placeholder="Username"
-            class="input w-full"
-            bind:value={username}
-            on:input={checkAvailability}
-            class:input-error={(!isValid && isTouched)}
-            class:input-warning={isTaken}
-            class:input-success={(isValid && isAvailable && !loading)}
-        />
+    {#if $userData?.username}
+        <p class="text-lg">
+            Your username is 
+            <span class="text-success font-bold">
+                @{$userData.username}
+            </span>
+        </p>
+        <p class="text-sm">(Usernames cannot be changed)</p>
+        <a class="btn btn-primary" href="/login/photo">Upload Profile Image</a>
+    {:else}
+        <form class="w-2/5" on:submit|preventDefault={confirmUsername}>
+            <input
+                type="text"    
+                placeholder="Username"
+                class="input w-full"
+                bind:value={username}
+                on:input={checkAvailability}
+                class:input-error={(!isValid && isTouched)}
+                class:input-warning={isTaken}
+                class:input-success={(isValid && isAvailable && !loading)}
+            />
 
-        <div class="my-4 min-h-16 px-8 w-full text-sm">
-            {#if loading}
-                <p class="text-secondary">
-                    Checking availability of @{username}...
-                </p>
-            {/if}
+            <div class="my-4 min-h-16 px-8 w-full text-sm">
+                {#if loading}
+                    <p class="text-secondary">
+                        Checking availability of @{username}...
+                    </p>
+                {/if}
 
-            {#if !isValid && isTouched}
-                <p class="text-error">
-                    must be 3 - 16 characters long, alphanumeric only
-                </p>
-            {/if}
+                {#if !isValid && isTouched}
+                    <p class="text-error">
+                        must be 3 - 16 characters long, alphanumeric only
+                    </p>
+                {/if}
 
-            {#if isValid && !isAvailable && !loading}
-                <p class="text-warning">
-                    @{username} is not available
-                </p>
-            {/if}
-        </div>
+                {#if isValid && !isAvailable && !loading}
+                    <p class="text-warning">
+                        @{username} is not available
+                    </p>
+                {/if}
+            </div>
 
-        <p>Is available? {isAvailable}</p>
+            <p>Is available? {isAvailable}</p>
 
-        <button class="btn btn-success">Confirm username @{username} </button>
-    </form>
+            <button class="btn btn-success">Confirm username @{username} </button>
+        </form>
+    {/if}
 </AuthCheck>

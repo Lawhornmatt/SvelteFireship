@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, onSnapshot, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { writable } from "svelte/store";
+import { writable, derived, type Readable } from "svelte/store";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBhFhZ8xQXxDXDtOylXgdXSqXRgVvSAUpQ",
@@ -66,4 +66,24 @@ export function docStore<T>(
         ref: docRef,
         id: docRef.id
     }
-}
+};
+
+// For TypeScript, to provide intellisense for the kind of fields we expect to receive from the document
+// Could not get to work
+// line 84: export const userData: Readable<UserData | null> = derived(...
+// Error: Cannot find name 'Readable' <- when over 'Readable' in above line
+
+interface UserData {
+    username: string;
+    bio: string;
+    photoURL: string;
+    links: any[];
+};
+
+export const userData: Readable<UserData | null> = derived(user, ($user, set) => { 
+    if ($user) {
+        return docStore<UserData>(`users/${$user.uid}`).subscribe(set);
+    } else {
+        set(null); 
+    }
+});  
