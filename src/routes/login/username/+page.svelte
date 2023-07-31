@@ -2,4 +2,4 @@
     
 </script>
 
-<h2 class="">USERNAME</h2>
+<h2 class="">Username</h2>
