@@ -15,7 +15,7 @@
         loading = true;
 
         debounceTimer = setTimeout(async () => {
-            console.log("Checking availability of", username);
+            console.log("Checking availability of: ", username);
     
             const ref = doc(db, "usernames", username);
             const exists = await getDoc(ref).then((doc) => doc.exists());
@@ -26,9 +26,25 @@
     };
 
     async function confirmUsername() {
+        console.log("confirming username: ", username);
+        const batch = writeBatch(db);
+        batch.set(doc(db, "usernames", username), { uid: $user?.uid});
+        batch.set(doc(db, "users", $user!.uid), {
+            username,
+            photoURL: $user?.photoURL ?? null,
+            published: true,
+            bio: "test bio bby",
+            links: [
+                {
+                    title: 'Test Link',
+                    url: 'https://lawhornmatt.com',
+                    icon: 'custom'
+                }
+            ]
+        });
 
+        await batch.commit();
     };
-
 </script>
 
 <AuthCheck>
