@@ -3,6 +3,11 @@
     import AnimatedRoute from "$lib/components/AnimatedRoute.svelte";
 </script>
 
+<!-- 
+    Navigation bar that renders Daisy UI Stepper 
+    'route.id' = the current URL minus the main domain 
+    .match uses regex | .includes is a non-regex option; both work
+-->
 <nav class="flex flex-col justify-center items-center mt-12 mb-8">
     <ul class="steps">
         <a href="/login" class="step step-primary">Sign In</a>
