@@ -4,10 +4,33 @@
     import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
     async function signInWithGoogle() {
+        /*
+            const provider = new GoogleAuthProvider();
+            const user = await signInWithPopup(auth, provider);
+            console.log(user);
+
+            Above is the old code for ONLY client-side signing-in with Google authentication
+            Now we are expanding this by extracting the ID token after signing in via Google...
+        */
         const provider = new GoogleAuthProvider();
-        const user = await signInWithPopup(auth, provider);
-        console.log(user);
-    }    
+        const credential = await signInWithPopup(auth, provider);
+        const idToken = await credential.user.getIdToken();
+        // ...With the token, we can use browser fetch, to make a call to our 'api/signin' route 
+        const res = await fetch("/api/signin", {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                // 'CSRF-Token': csrfToken // Normally, this would be here but this is handled by sveltekit automatically
+            },
+            body: JSON.stringify({ idToken }),
+        });
+    };
+
+    // We dont just want to signout in the client, we also want to delete the cookie, too
+    async function signOutSSR() {
+        const res = await fetch("/api/signin", { method: "DELETE" });
+        await signOut(auth);
+    };
 </script>
 
 <h2>Login</h2>
@@ -16,7 +39,7 @@
 {#if $user}
     <h2 class="card-title">Welcome, {$user.displayName}</h2>
     <p class="text-center text-success">You are logged in</p>
-    <button class="btn btn-danger" on:click={() => signOut(auth)}>Sign out</button>
+    <button class="btn btn-danger" on:click={signOutSSR}>Sign out</button>
 {:else}
     <button class="btn btn-primary" on:click={signInWithGoogle}>Sign in with Google</button>
 {/if}
