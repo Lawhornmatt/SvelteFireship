@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { auth, user } from '$lib/firebase';
+    import { auth, user, userData } from '$lib/firebase';
 
     import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
@@ -25,10 +25,6 @@
             },
             body: JSON.stringify({ idToken }),
         });
-
-        if (res.status === 200) {
-            goto('/login/username')
-        };
     };
 
     // We dont just want to signout in the client, we also want to delete the cookie, too
@@ -38,14 +34,18 @@
     };
 </script>
 
-<h2>Login</h2>
-
 <!-- Reference the user store and, if present, display their info. If not, present the log-in button -->
 {#if $user}
     <h2 class="card-title">Welcome, {$user.displayName}</h2>
     <p class="text-center text-success">You are logged in</p>
+    {#if !$userData}
+        <a class="btn btn-primary" href="/login/username">Choose a username</a>
+    {:else}
+        <a class="btn btn-primary" href={`/${$userData.username}`}>View your profile</a>
+    {/if}
     <button class="btn btn-danger" on:click={signOutSSR}>Sign out</button>
 {:else}
+    <h2>Login</h2>
     <button class="btn btn-primary" on:click={signInWithGoogle}>Sign in with Google</button>
 {/if}
 
