@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { auth, user } from '$lib/firebase';
 
     import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
@@ -24,6 +25,10 @@
             },
             body: JSON.stringify({ idToken }),
         });
+
+        if (res.status === 200) {
+            goto('/login/username')
+        };
     };
 
     // We dont just want to signout in the client, we also want to delete the cookie, too
