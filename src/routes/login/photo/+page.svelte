@@ -29,6 +29,7 @@
 <AuthCheck>
     <h2 class="card-title">Upload a Profile Photo</h2>
 
+    {#if $userData?.username}
     <form class="max-w-screen-md w-full">
         <div class="form-control w-full max-w-xs my-10 mx-auto text-center">
             <img 
@@ -54,4 +55,10 @@
             {/if}
         </div>
     </form>
+    {:else}
+    <p class="text-error my-10 flex flex-col">
+        Please create a username before uploading a profile photo
+        <a class="btn btn-primary" href="/login/username">Choose username</a>
+    </p>
+    {/if}
 </AuthCheck>

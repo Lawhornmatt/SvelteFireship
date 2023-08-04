@@ -38,10 +38,11 @@
 {#if $user}
     <h2 class="card-title">Welcome, {$user.displayName}</h2>
     <p class="text-center text-success">You are logged in</p>
+    <!-- This block is incase you are logged in and taken else where but still navigate back to /login -->
     {#if !$userData}
         <a class="btn btn-primary" href="/login/username">Choose a username</a>
     {:else}
-        <a class="btn btn-primary" href={`/${$userData.username}`}>View your profile</a>
+        <a class="btn btn-primary" href={`/dashboard`}>Go to your dashboard</a>
     {/if}
     <button class="btn btn-danger" on:click={signOutSSR}>Sign out</button>
 {:else}

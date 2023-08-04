@@ -89,7 +89,8 @@
             </span>
         </p>
         <p class="text-sm">(Usernames cannot be changed)</p>
-        <a class="btn btn-primary" href="/login/photo">Upload Profile Image</a>
+        <a class="btn btn-primary" href="/login/photo">Change Profile Image</a>
+        <a class="btn btn-primary" href={`/dashboard`}>Go to your dashboard</a>
     {:else}
         <!-- 
             submitting calls confirmUsername, but we also easily prevent the default action by piping preventDefault 

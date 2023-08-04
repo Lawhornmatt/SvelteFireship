@@ -5,7 +5,7 @@
     $user;
     $userData;
 
-    /* Debug Functions for Buttons 
+    /* Debug Functions for Buttons */ 
     function debugUserStore() {
         console.log('User Store:');
         console.log($user);
@@ -15,14 +15,14 @@
         console.log('UserData:');
         console.log($userData);
     };
-    */
+    
     
 </script>
 
-<!-- Debug Buttons to see current state of store as one navigates site
+<!-- Debug Buttons to see current state of store as one navigates site -->
     <button class="btn btn-primary" on:click={debugUserStore}>See $user</button>
     <button class="btn btn-primary" on:click={debugUserDataStore}>See $userData</button>
- -->
+
 
 <div class="min-h-screen flex flex-col">
     <slot />

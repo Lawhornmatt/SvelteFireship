@@ -17,14 +17,14 @@ export const handle = (async ({ event, resolve }) => {
         // Difference is, once we have a decodedId, we set it as a value on the event locals object as 'userID'
         // This will allow us to access it from any other server.ts file
         event.locals.userID = decodedClaims.uid;
-        console.log("found user id", decodedClaims.uid);
+        console.log("Hook Handle: found user id", decodedClaims.uid);
     } catch (e) {
         // If above fails, set to null AKA user is not logged-in
-        console.log("user id not found");
+        console.log("Hook Handle: user id not found");
         event.locals.userID = null;
         return resolve(event);
     };
   
     // We use resolve to move on to whatever logic is next in the server endpoint
     return resolve(event);
-  }) satisfies Handle;
+}) satisfies Handle;
