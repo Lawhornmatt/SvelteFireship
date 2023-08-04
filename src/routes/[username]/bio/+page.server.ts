@@ -20,6 +20,8 @@ export const load = (async ({ locals, params }) => {
 
     // Immediately jump into authenticated data fetching
     const userDoc = await adminDB.collection("users").doc(uid).get();
+    // I still dont know what this "!" is doing here and Google is impossible
+    // remember to ask a mentor one day who is good at TypeScript
     const { username, bio } = userDoc.data()!;
 
     if (params.username !== username) {
