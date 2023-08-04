@@ -1,11 +1,11 @@
 import type { PageServerLoad } from './$types';
-import { adminAuth, adminDB } from "$lib/server/admin";
-import { collection, getDocs, limit, query, where } from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 import { db } from "$lib/firebase";
-import { error, redirect, fail } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 
-export const load = (async ({ locals }) => {
+export const load = (async ({ parent }) => {
     
+    await parent();
     console.log('Querying DB for all usernames');
 
     const collectionRef = collection(db, "users");

@@ -6,8 +6,10 @@ export const load = (async ({ locals }) => {
     const uid = locals.userID;
 
     if (!uid) {
-        console.log('uh oh, no uid');
+        console.log('No uid, Redirect to log-in');
         throw redirect(301, "/login");
     };
+
+    console.log(locals);
 
 }) satisfies LayoutServerLoad;
