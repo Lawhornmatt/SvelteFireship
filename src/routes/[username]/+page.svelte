@@ -1,5 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
+    import { page } from "$app/stores";
+    import { userData } from "$lib/firebase";
     import UserLink from '$lib/components/UserLink.svelte';
     
     export let data: PageData;
@@ -14,9 +16,9 @@
     <meta name="description" content={data.bio} />
 </svelte:head>
 
-<main class="prose text-center mx-auto mt-8">
+<main class="prose flex flex-col text-center mx-auto mt-8">
 
-    <h1 class="text-7xl text-purple-500">
+    <h1 class="text-7xl text-purple-500 my-4">
         @{data.username}
     </h1>
 
@@ -28,10 +30,19 @@
     />
 
     <p class="text-xl my-8">{data.bio ?? "no bio yet..."}</p>
+    {#if data.username === $userData?.username}
+    <a class="btn btn-primary mx-auto my-4" href={`/${data.username}/bio`}>Edit your bio</a>
+    {/if}
 
     <ul class="list-none">
         {#each data.links as item}
             <UserLink {...item} />
         {/each}
     </ul>
+
+    {#if data.username === $userData?.username}
+    <a class="btn btn-primary mx-auto my-4" href={`/${data.username}/edit`}>Edit your links</a>
+    {/if}
+
+    <a class="btn btn-primary mx-auto my-4" href={`/dashboard`}>Return to dashboard</a>
 </main>

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { user, userData } from "$lib/firebase";
+    import { page } from "$app/stores";
     import "./app.css";
 
     $user;
@@ -16,12 +17,18 @@
         console.log($userData);
     };
     
+    function debugPageStore() {
+        console.log('PageData:');
+        console.log($page);
+    };
+    
     
 </script>
 
 <!-- Debug Buttons to see current state of store as one navigates site -->
-    <button class="btn btn-primary" on:click={debugUserStore}>See $user</button>
-    <button class="btn btn-primary" on:click={debugUserDataStore}>See $userData</button>
+    <button class="btn btn-primary" on:click={debugUserStore}>See user</button>
+    <button class="btn btn-primary" on:click={debugUserDataStore}>See userData</button>
+    <button class="btn btn-primary" on:click={debugPageStore}>See page</button>
 
 
 <div class="min-h-screen flex flex-col">

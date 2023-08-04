@@ -162,5 +162,8 @@
             Add a Link
           </button>
         {/if}
+        <div class="flex flex-col">
+          <a class="btn btn-primary mx-auto my-4" href={`/${$userData.username}`}>Return to profile</a>
+        </div>
     {/if}
 </main>

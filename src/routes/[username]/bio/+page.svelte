@@ -45,6 +45,9 @@
                 value={data.bio}
             />
         </div>
-        <button class="btn btn-primary my-5">Update Bio</button>
+        <div class="flex flex-col">
+            <button class="btn btn-primary mx-auto my-4">Update Bio</button>
+            <a class="btn btn-primary mx-auto my-4" href={`/${data.username}`}>Return to profile</a>
+        </div>
     </form>
 </main>
