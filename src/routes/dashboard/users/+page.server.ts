@@ -8,27 +8,6 @@ export const load = (async ({ locals }) => {
     
     console.log('Querying DB for all usernames');
 
-    const fakeData = [
-        {
-          username: 'blahblah',
-          published: true,
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/fireship-svelte-tut.appspot.com/o/users%2FMB8lYGo9AKaj6guaY4ORKy0s1ts2%2Fprofile.png?alt=media&token=00360b1d-c64e-433c-a671-f785be15a9cf'
-        },
-        {
-          username: 'myprofile',
-          published: true,
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/fireship-svelte-tut.appspot.com/o/users%2FmAxney3dtscTPjhzKqEhlY9oP4J3%2Fprofile.png?alt=media&token=05a0d4f0-1be5-4443-b605-9c2d7f7c41f5'
-        },
-        {
-          username: 'MattIsSmelly',
-          published: true,
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/fireship-svelte-tut.appspot.com/o/users%2FwSGaTv1vcygPhkIxiiFSHoXeas22%2Fprofile.png?alt=media&token=bb219639-903d-4be1-895e-2e8d7a405ad1'
-        }
-    ];
-
-    return {fakeData};
-
-    /*
     const collectionRef = collection(db, "users");
     const usersSnapshot = await getDocs(collectionRef);
 
@@ -37,22 +16,18 @@ export const load = (async ({ locals }) => {
         throw error(404, "No users found!");
     };
 
-    const data = usersSnapshot.docs.map((doc) => { 
-        let stract = doc.data();
-        return { 
-            username: stract.username,
-            published: stract.published,
-            photoURL: stract.photoURL 
-        };
-    });
+    const users = usersSnapshot.docs
+        .map((doc) => { 
+            let stract = doc.data();
+            return { 
+                username: stract.username,
+                published: stract.published,
+                photoURL: stract.photoURL 
+            };
+        })
+        .filter((stract) => stract.published
+    );
 
-    return {data.filter((doc) => doc.published)};
-    */
-
-    // console.log(publishedData);
-
-    // const usernameArray: any = [];
-    // usernamesSnapshot.forEach((doc) => usernameArray.push(doc.id));
-    // console.log(usernameArray);
+    return { users };
 
 }) satisfies PageServerLoad;

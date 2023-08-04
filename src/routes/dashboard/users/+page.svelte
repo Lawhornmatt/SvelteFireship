@@ -4,12 +4,14 @@
 
     export let data: PageData;
 
-    console.log(data.fakeData.map((doc) => doc.username));
+    // console.log(data.fakeData.map((doc) => doc.username));
 </script>
+
+<!-- Displays a list of links to all published users -->
 
 <div class="flex flex-col justify-center items-center mt-16">
     <ul class="list-none w-2/5 xl:w-1/5">
-        {#each data.fakeData as item}
+        {#each data.users as item}
             <ProfileLink {...item} />
         {/each}
     </ul>
