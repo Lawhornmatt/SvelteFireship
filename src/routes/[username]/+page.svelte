@@ -16,9 +16,9 @@
     <meta name="description" content={data.bio} />
 </svelte:head>
 
-<main class="prose flex flex-col text-center mx-auto mt-8">
+<main class="flex flex-col self-center items-center text-center w-4/5 md:w-3/5 xl:w-2/5 mx-8 mt-8">
 
-    <h1 class="text-7xl text-purple-500 my-4">
+    <h1 class="text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl text-purple-500 my-4">
         @{data.username}
     </h1>
 
@@ -29,12 +29,12 @@
         class="mx-auto"
     />
 
-    <p class="text-xl my-8">{data.bio ?? "no bio yet..."}</p>
+    <p class="text-xl my-8 prose">{data.bio ?? "no bio yet..."}</p>
     {#if data.username === $userData?.username}
     <a class="btn btn-primary mx-auto my-4" href={`/${data.username}/bio`}>Edit your bio</a>
     {/if}
 
-    <ul class="list-none">
+    <ul class="list-none w-4/5">
         {#each data.links as item}
             <UserLink {...item} />
         {/each}

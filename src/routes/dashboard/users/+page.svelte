@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import ProfileLink from '$lib/components/profileLink.svelte';
+    import ProfileLink from '$lib/components/ProfileLink.svelte';
 
     export let data: PageData;
 
@@ -9,8 +9,8 @@
 
 <!-- Displays a list of links to all published users -->
 
-<div class="flex flex-col justify-center items-center mt-16">
-    <ul class="list-none w-2/5 xl:w-1/5">
+<div class="flex flex-col w-full justify-center items-center mt-16">
+    <ul class="list-none w-4/5 xl:w-2/5">
         {#each data.users as item}
             <ProfileLink {...item} />
         {/each}
