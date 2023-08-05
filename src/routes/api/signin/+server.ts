@@ -1,5 +1,5 @@
 import { adminAuth } from '$lib/server/admin';
-import { error, json } from '@sveltejs/kit';
+import { error, json, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 /*
@@ -33,8 +33,17 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
         // i.e. '__session', for firebase to cache it to a CDN
         cookies.set('__session', cookie, options);
 
-        //with cookie set, you can return some json with a status of signed in
-        return json({ status: 'signedIn' });
+        /*
+            We token decoded, server can read any stored claims,
+            i.e. in this case, do they have the profile = true claim on their account
+            meaning they chose a username and are in the database.
+            We send that status back to the client in the response
+        */
+            if(decodedIdToken.profile) {
+            return json({ status: "success", profile: true });
+        } else {
+            return json({ status: "success", profile: false });
+        };
     } else {
         throw error(401, 'Recent sign in required!');
     }

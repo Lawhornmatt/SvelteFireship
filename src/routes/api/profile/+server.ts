@@ -19,9 +19,9 @@ export const POST: RequestHandler = async ({ request }) => {
         profile: true
     });
 
-    console.log('Server idToken: ')
-    console.log(idToken)
-    console.log('Server decoded: ')
-    console.log(decodedIdToken)
+    // console.log('Server idToken: ')
+    // console.log(idToken)
+    // console.log('Server decoded: ')
+    // console.log(decodedIdToken)
     return json({ status: 'success' });
 };

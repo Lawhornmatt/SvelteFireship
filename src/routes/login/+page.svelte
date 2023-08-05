@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { auth, user, userData } from '$lib/firebase';
     import { getIdToken } from 'firebase/auth';
 
@@ -16,17 +17,24 @@
         const provider = new GoogleAuthProvider();
         const credential = await signInWithPopup(auth, provider);
         const idToken = await credential.user.getIdToken();
-        console.log('idToken: ');
-        console.log(idToken);
         // ...With the token, we can use browser fetch, to make a call to our 'api/signin' route 
         const res = await fetch("/api/signin", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
-                // 'CSRF-Token': csrfToken // Normally, this would be here but this is handled by sveltekit automatically
+                "accept": "application/json"
+                // Normally, this would be here but this is handled by sveltekit automatically
+                // 'CSRF-Token': csrfToken 
             },
             body: JSON.stringify({ idToken }),
         });
+
+        // We parse the response and see if the user has finished profile creation. 
+        // If so, we redirect to the dashboard
+        const response = await res.json();
+        if (response.profile) {
+            goto('/dashboard');
+        };
     };
 
     // We dont just want to signout in the client, we also want to delete the cookie, too
