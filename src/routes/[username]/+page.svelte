@@ -34,7 +34,7 @@
     <a class="btn btn-primary mx-auto my-4" href={`/${data.username}/bio`}>Edit your bio</a>
     {/if}
 
-    <ul class="list-none w-4/5">
+    <ul class="list-none w-4/5 xl:w-3/5 2xl:w-2/5">
         {#each data.links as item}
             <UserLink {...item} />
         {/each}
