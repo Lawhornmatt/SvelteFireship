@@ -10,6 +10,6 @@ export const load = (async ({ locals }) => {
         throw redirect(301, "/login");
     };
 
-    console.log(locals);
+    // console.log(locals);
 
 }) satisfies LayoutServerLoad;

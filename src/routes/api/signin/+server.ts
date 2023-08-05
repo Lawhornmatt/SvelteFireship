@@ -1,5 +1,5 @@
 import { adminAuth } from '$lib/server/admin';
-import { error, json, redirect } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 /*

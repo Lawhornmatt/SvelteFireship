@@ -1,6 +1,6 @@
 <script lang="ts">
     import AuthCheck from "$lib/components/AuthCheck.svelte";
-    import { db, auth, user, userData } from "$lib/firebase";
+    import { db, user, userData } from "$lib/firebase";
     import { doc, getDoc, writeBatch } from "firebase/firestore";
     import { getIdToken } from 'firebase/auth';
 
@@ -79,13 +79,12 @@
         username = "";
         isAvailable = false;
 
-        // === Now, add claim onto their auth saying they've finished making an account
-        if (auth.currentUser) {
-            const idToken = await getIdToken(auth.currentUser, false);
-            console.log('idToken: ');
-            console.log(idToken);
+        // Now, add claim onto their auth saying they've finished making an account
+        // auth.currentUser -> $user
+        if ($user) {
+            const idToken = await getIdToken($user, false);
 
-            // Send token to your backend via HTTPS
+            // Send token to your backend via fetch API
             const res = fetch("/api/profile", {
                 method: "POST",
                 headers: {

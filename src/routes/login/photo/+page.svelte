@@ -54,6 +54,7 @@
                 <progress class="progress progress-info w-56 mt-6"/>
             {/if}
         </div>
+        <a class="btn btn-primary mx-auto my-4" href={`/dashboard`}>Go to your dashboard</a>
     </form>
     {:else}
     <p class="text-error my-10 flex flex-col">

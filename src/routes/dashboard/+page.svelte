@@ -1,5 +1,12 @@
 <script lang="ts">
-    import { userData } from '$lib/firebase';
+    import { auth, userData } from '$lib/firebase';
+    import { signOut } from 'firebase/auth';
+
+    // We dont just want to signout in the client, we also want to delete the cookie, too
+    async function signOutSSR() {
+        const res = await fetch("/api/signin", { method: "DELETE" });
+        await signOut(auth);
+    };
 </script>
 
 <!-- 
@@ -11,5 +18,5 @@
     <a class="btn btn-primary mx-auto my-4" href={`/dashboard/users`} data-sveltekit-preload-data="tap">View all users</a>
 
     <div class="btn btn-neutral mx-auto my-4">Disabled</div>
-    <div class="btn btn-neutral mx-auto my-4">Disabled</div>
+    <button class="btn btn-danger mx-auto my-4" on:click={signOutSSR}>Sign out</button>
 </div>

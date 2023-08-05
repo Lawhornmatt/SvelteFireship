@@ -1,10 +1,12 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { auth, user, userData } from '$lib/firebase';
-    import { getIdToken } from 'firebase/auth';
-
     import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
+    /*
+        Authenticates the user and sends an idToken to be stored as a secure cookie on the browser by the server
+        Browser also reads what claims the user has and send back those claim statuses via the fetch API response
+    */
     async function signInWithGoogle() {
         /*
             const provider = new GoogleAuthProvider();
@@ -50,14 +52,14 @@
     <p class="text-center text-success">You are logged in</p>
     <!-- This block is incase you are logged in and taken else where but still navigate back to /login -->
     {#if !$userData}
-        <a class="btn btn-primary" href="/login/username">Choose a username</a>
+        <a class="btn btn-primary mx-auto my-4" href="/login/username">Choose a username</a>
     {:else}
-        <a class="btn btn-primary" href={`/dashboard`}>Go to your dashboard</a>
+        <a class="btn btn-primary mx-auto my-4" href={`/dashboard`}>Go to your dashboard</a>
     {/if}
-    <button class="btn btn-danger" on:click={signOutSSR}>Sign out</button>
+    <button class="btn btn-danger mx-auto my-4" on:click={signOutSSR}>Sign out</button>
 {:else}
     <h2>Login</h2>
-    <button class="btn btn-primary" on:click={signInWithGoogle}>Sign in with Google</button>
+    <button class="btn btn-primary mx-auto my-4" on:click={signInWithGoogle}>Sign in with Google</button>
 {/if}
 
 <!-- 
