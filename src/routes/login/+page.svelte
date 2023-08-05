@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { auth, user, userData } from '$lib/firebase';
+    import { getIdToken } from 'firebase/auth';
 
     import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
@@ -16,6 +16,8 @@
         const provider = new GoogleAuthProvider();
         const credential = await signInWithPopup(auth, provider);
         const idToken = await credential.user.getIdToken();
+        console.log('idToken: ');
+        console.log(idToken);
         // ...With the token, we can use browser fetch, to make a call to our 'api/signin' route 
         const res = await fetch("/api/signin", {
             method: "POST",

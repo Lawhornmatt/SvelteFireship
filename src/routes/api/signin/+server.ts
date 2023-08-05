@@ -16,11 +16,14 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const expiresIn = 1000 * 60 * 60 * 24 * 5; // 5 days
 
     // Decode securely on firebase server, giving access to user data
+    // Tried adding error catching but whole script stops if verification fails
     const decodedIdToken = await adminAuth.verifyIdToken(idToken);
 
     // For added security, lets make sure the auth time on that token was less than 5 min ago
     // because cookie should only be set on a recent authentication
     if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
+
+        // === Handle __Session Cookie for Authentication ===
         // Use AdminAuth SDK to make a new cookie, passing in idToken as arg
         const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
         // Important to set path, by default it will be scoped to the URL it was created

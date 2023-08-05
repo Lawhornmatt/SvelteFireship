@@ -1,5 +1,7 @@
 import { adminAuth } from "$lib/server/admin";
 import type { Handle } from "@sveltejs/kit";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "$lib/firebase";
 
 // We changed app.d.ts to allow a new type in the Locals interface called userID
 
@@ -17,7 +19,7 @@ export const handle = (async ({ event, resolve }) => {
         // Difference is, once we have a decodedId, we set it as a value on the event locals object as 'userID'
         // This will allow us to access it from any other server.ts file
         event.locals.userID = decodedClaims.uid;
-        console.log("Hook Handle: found user id", decodedClaims.uid);
+        event.locals.profile = decodedClaims.profile;
     } catch (e) {
         // If above fails, set to null AKA user is not logged-in
         console.log("Hook Handle: user id not found");

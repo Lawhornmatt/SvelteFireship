@@ -1,7 +1,8 @@
 <script lang="ts">
     import AuthCheck from "$lib/components/AuthCheck.svelte";
-    import { db, user, userData } from "$lib/firebase";
+    import { db, auth, user, userData } from "$lib/firebase";
     import { doc, getDoc, writeBatch } from "firebase/firestore";
+    import { getIdToken } from 'firebase/auth';
 
     // Local state on the component
     let username = "";
@@ -77,6 +78,22 @@
         // Reset state
         username = "";
         isAvailable = false;
+
+        // === Now, add claim onto their auth saying they've finished making an account
+        if (auth.currentUser) {
+            const idToken = await getIdToken(auth.currentUser, false);
+            console.log('idToken: ');
+            console.log(idToken);
+
+            // Send token to your backend via HTTPS
+            const res = fetch("/api/profile", {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+                body: JSON.stringify({ idToken }),
+            });
+        };
     };
 </script>
 

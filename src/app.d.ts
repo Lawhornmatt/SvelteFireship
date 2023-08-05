@@ -10,6 +10,7 @@ declare global {
 				to be accessed from any server-side end point
 			*/
 			userID: string | null;
+			profile: boolean | null;
 		}
 		// interface PageData {}
 		// interface Platform {}
