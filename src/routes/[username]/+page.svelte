@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import { page } from "$app/stores";
     import { userData } from "$lib/firebase";
     import UserLink from '$lib/components/UserLink.svelte';
     

@@ -3,8 +3,6 @@
     import ProfileLink from '$lib/components/ProfileLink.svelte';
 
     export let data: PageData;
-
-    // console.log(data.fakeData.map((doc) => doc.username));
 </script>
 
 <!-- Displays a list of links to all published users -->
